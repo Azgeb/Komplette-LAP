@@ -1,0 +1,14 @@
+.event-area {
+    background-color: whitesmoke;
+    margin-bottom: 2rem
+}
+
+.event-joined {
+    outline: green 2px solid;
+}
+
+.event-heading {
+    background-color: grey
+}
+
+.event-description {}

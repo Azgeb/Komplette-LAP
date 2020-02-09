@@ -24,13 +24,7 @@ if (isset($_GET['login'])) {
 <!DOCTYPE html>
 <html lang="en">
 <title>Login</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-
-<link rel="stylesheet" href="/../src/css/styles.css">
-<link rel="stylesheet" href="/../src/css/navbar.css">
+<?php allHeadEntrys() ?>
 
 <body>
     <!-- Navbar -->

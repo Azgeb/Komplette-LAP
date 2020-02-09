@@ -1,22 +1,36 @@
 <?php
 session_start();
 require_once(__DIR__ . '/../modules/config.php');
+require_once('../classes/user.php');
+
+$user = new User();
+$user = unserialize($_SESSION['user']);
+
+if (!$user || !$user->userRole == 0) {
+    // Asks the user to login if the secret.php got accesed via the searchbar 
+    die('Bitte zuerst <a href="login.php">einloggen</a>');
+}
+// Following code reads the logged in user from the session storage 
+$events = $database->getEvents();
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-<title>Register</title>
+<title>Website</title>
 <?php allHeadEntrys() ?>
 
 <body>
     <!-- Navbar -->
     <div id="navbar">
         <ul style="display: flex;">
-            <li> <a href="index.html" class="bar-item button padding-large white">Home</a></li>
+            <li> <a href="../index.html" class="bar-item button padding-large white">Home</a></li>
             <div style="flex-grow: 1;"></div>
-            <li><a href="/sites/login.php" class="bar-item button padding-large white">Login</a></li>
-        </ul>
+            <?php if($user->userRole == 0) echo'<li><a href="admin.php" class="bar-item button padding-large white">Admin Area</a></li>'?>
+            <li><a href="logout.php" class="bar-item button padding-large white">Logout</a></li>
     </div>
     <!-- Content -->
+
     <?php
     $showFormular = true;
     if (isset($_GET['register'])) {
@@ -46,14 +60,14 @@ require_once(__DIR__ . '/../modules/config.php');
             $user = $database->getUser($email);
 
             if ($user !== false) {
-               // Displayes a message under the navbar 
+                // Displayes a message under the navbar 
                 echo 'Diese E-Mail-Adresse ist bereits vergeben<br>';
                 $error = true;
             }
         }
         // Regisers a new user 
         if (!$error) {
-            $result = $database->createUser($email, $password,1);
+            $result = $database->createUser($email, $password, 0);
             if ($result) {
                 /* 
                 Displayes a html tag to confirn the creation of an new user
@@ -70,9 +84,10 @@ require_once(__DIR__ . '/../modules/config.php');
 
     if ($showFormular) {
     ?>
-     <!-- Div that centers the displayed register form -->
+        <!-- Div that centers the displayed register form -->
         <div style=" display: block;margin-left: auto;margin-right: auto;width: max-content;">
             <form action="?register=1" method="post">
+                <h1>Neuen Administrator Anlegen</h1>
                 E-Mail:<br>
                 <input type="email" size="40" maxlength="250" name="email"><br><br>
                 Dein password:<br>
@@ -85,6 +100,16 @@ require_once(__DIR__ . '/../modules/config.php');
     <?php
     }
     ?>
+
+    <div style=" display: block;margin-left: auto;margin-right: auto;width: max-content;">
+            <h1>Offene Termine</h1>
+            <?php
+            foreach ($events as &$event) {
+               drawEvent($event, $database, $user);
+            }
+            ?>
+    </div>
+
     <!-- Footer -->
     <footer class="container padding-64 center opacity">
         <div class="xlarge padding-32">
