@@ -2,6 +2,8 @@
 
 require_once(__DIR__.'/../classes/database.php');
 require_once(__DIR__.'/functions.php');
+require_once(__DIR__.'/../classes/event.php');
+require_once(__DIR__.'/../classes/user.php');
 
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
