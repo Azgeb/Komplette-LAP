@@ -18,7 +18,15 @@ $events = $database->getEvents();
 <!DOCTYPE html>
 <html lang="en">
 <title>Website</title>
-<?php allHeadEntrys() ?>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/../src/css/styles.css">
+<link rel="stylesheet" href="/../src/css/navbar.css">
+<link rel="stylesheet" href="/../src/css/event.css">
 
 <body>
     <!-- Navbar -->
@@ -26,94 +34,22 @@ $events = $database->getEvents();
         <ul style="display: flex;">
             <li> <a href="../index.html" class="bar-item button padding-large white">Home</a></li>
             <div style="flex-grow: 1;"></div>
-            <?php if($user->userRole == 0) echo'<li><a href="admin.php" class="bar-item button padding-large white">Admin Area</a></li>'?>
+            <?php if ($user->userRole == 0) echo '<li><a href="admin.php" class="bar-item button padding-large white">Admin Area</a></li>' ?>
             <li><a href="logout.php" class="bar-item button padding-large white">Logout</a></li>
     </div>
     <!-- Content -->
-
-    <?php
-    $showFormular = true;
-    if (isset($_GET['register'])) {
-        // Sets up the needed variables 
-        $error = false;
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $passwordConfirm = $_POST['passwordConfirm'];
-
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            // Displayes a message under the navbar 
-            echo 'Bitte eine gültige E-Mail-Adresse eingeben<br>';
-            $error = true;
-        }
-        if (strlen($password) == 0) {
-            // Displayes a message under the navbar 
-            echo 'Bitte ein password angeben<br>';
-            $error = true;
-        }
-        if ($password != $passwordConfirm) {
-            // Displayes a message under the navbar 
-            echo 'Die Passwörter müssen übereinstimmen<br>';
-            $error = true;
-        }
-        // Validate that the email is not registered yet 
-        if (!$error) {
-            $user = $database->getUser($email);
-
-            if ($user !== false) {
-                // Displayes a message under the navbar 
-                echo 'Diese E-Mail-Adresse ist bereits vergeben<br>';
-                $error = true;
-            }
-        }
-        // Regisers a new user 
-        if (!$error) {
-            $result = $database->createUser($email, $password, 0);
-            if ($result) {
-                /* 
-                Displayes a html tag to confirn the creation of an new user
-                and provides a link to th login. 
-                */
-                echo 'Du wurdest erfolgreich registriert. <a href="/sites/login.php">Zum Login</a>';
-                $showFormular = false;
-            } else {
-                // Displayes a message under the navbar 
-                echo 'Beim Abspeichern ist leider ein Fehler aufgetreten<br>';
-            }
-        }
-    }
-
-    if ($showFormular) {
-    ?>
-        <!-- Div that centers the displayed register form -->
-        <div style=" display: block;margin-left: auto;margin-right: auto;width: max-content;">
-            <form action="?register=1" method="post">
-                <h1>Neuen Administrator Anlegen</h1>
-                E-Mail:<br>
-                <input type="email" size="40" maxlength="250" name="email"><br><br>
-                Dein password:<br>
-                <input type="password" size="40" maxlength="250" name="password"><br>
-                password wiederholen:<br>
-                <input type="password" size="40" maxlength="250" name="passwordConfirm"><br><br>
-                <input type="submit" value="Abschicken">
-            </form>
-        </div>
-    <?php
-    }
-    ?>
-
-    <div style=" display: block;margin-left: auto;margin-right: auto;width: max-content;">
-            <h1>Offene Termine</h1>
-            <?php
-            foreach ($events as &$event) {
-               drawEvent($event, $database, $user);
-            }
-            ?>
+    <!-- Div that centers the displayed register form -->
+    <div style=" display: block;margin-left: auto;margin-right: auto; margin-top: 2rem;width: max-content;">
+        <?php
+        echo 'Veranstaltung <a href="/sites/createEvent.php">erstellen</a></br></br>';
+        echo 'User <a href="/sites/createUser.php">erstellen</a>';
+        ?>
     </div>
 
     <!-- Footer -->
-    <footer class="container padding-64 center opacity">
-        <div class="xlarge padding-32">
-            <i class="fa fa-github"></i>
+    <footer>
+        <div>
+            <p>LAP (c) 2020</p>
         </div>
     </footer>
 </body>
