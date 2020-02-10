@@ -4,6 +4,16 @@ body {
     padding: 0;
 }
 
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: gray;
+    color: whitesmoke;
+    text-align: center;
+}
+
 ul {
     list-style-type: none;
     margin: 0;

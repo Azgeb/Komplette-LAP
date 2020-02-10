@@ -4,7 +4,7 @@
 }
 
 .event-joined {
-    outline: green 2px solid;
+    outline: rgb(3, 204, 3) 3px solid;
 }
 
 .event-heading {
