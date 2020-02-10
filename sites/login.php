@@ -6,7 +6,7 @@ if (isset($_GET['login'])) {
     // Sets up the needed variables 
     $email = $_POST['email'];
     $passwort = $_POST['passwort'];
-    
+
     // Validates the users provided and stores the user 
     $user = $database->login($email, $passwort);
 
@@ -24,7 +24,14 @@ if (isset($_GET['login'])) {
 <!DOCTYPE html>
 <html lang="en">
 <title>Login</title>
-<?php allHeadEntrys() ?>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/../src/css/styles.css">
+<link rel="stylesheet" href="/../src/css/navbar.css">
 
 <body>
     <!-- Navbar -->
@@ -54,9 +61,9 @@ if (isset($_GET['login'])) {
         </form>
     </div>
     <!-- Footer -->
-    <footer class="container padding-64 center opacity">
-        <div class="xlarge padding-32">
-            <i class="fa fa-github"></i>
+    <footer>
+        <div>
+            <p>LAP (c) 2020</p>
         </div>
     </footer>
 </body>
