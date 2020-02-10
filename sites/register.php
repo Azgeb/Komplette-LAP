@@ -5,7 +5,14 @@ require_once(__DIR__ . '/../modules/config.php');
 <!DOCTYPE html>
 <html lang="en">
 <title>Register</title>
-<?php allHeadEntrys() ?>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="/../src/css/styles.css">
+<link rel="stylesheet" href="/../src/css/navbar.css">
 
 <body>
     <!-- Navbar -->
@@ -46,14 +53,14 @@ require_once(__DIR__ . '/../modules/config.php');
             $user = $database->getUser($email);
 
             if ($user !== false) {
-               // Displayes a message under the navbar 
+                // Displayes a message under the navbar 
                 echo 'Diese E-Mail-Adresse ist bereits vergeben<br>';
                 $error = true;
             }
         }
         // Regisers a new user 
         if (!$error) {
-            $result = $database->createUser($email, $password,1);
+            $result = $database->createUser($email, $password, 1);
             if ($result) {
                 /* 
                 Displayes a html tag to confirn the creation of an new user
@@ -70,7 +77,7 @@ require_once(__DIR__ . '/../modules/config.php');
 
     if ($showFormular) {
     ?>
-     <!-- Div that centers the displayed register form -->
+        <!-- Div that centers the displayed register form -->
         <div style=" display: block;margin-left: auto;margin-right: auto;width: max-content;">
             <form action="?register=1" method="post">
                 E-Mail:<br>
@@ -86,9 +93,9 @@ require_once(__DIR__ . '/../modules/config.php');
     }
     ?>
     <!-- Footer -->
-    <footer class="container padding-64 center opacity">
-        <div class="xlarge padding-32">
-            <i class="fa fa-github"></i>
+    <footer>
+        <div>
+            <p>LAP (c) 2020</p>
         </div>
     </footer>
 </body>
