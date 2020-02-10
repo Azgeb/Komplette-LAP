@@ -13,6 +13,21 @@ if (!$user || !$user->email) {
 }
 // Following code reads the logged in user from the session storage 
 $events = $database->getEvents();
+
+if (isset($_GET['joinEvent'])) {
+
+    $eventId = $_POST['eventId'];
+    echo '<script>';
+    echo 'console.log(' . json_encode($eventId) . ')';
+    echo '</script>';
+    $result = $database->joinEvent($eventId, $user->id);
+    if ($result && $result !== false) {
+        //header("Location: /sites/admin.php", true, 301);
+    } else {
+        // Dispays an error if the user is invalide 
+        $errorMessage = "Ein Fehler ist aufgetreten.<br>";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -39,15 +54,30 @@ $events = $database->getEvents();
 
     </div>
     <!-- Content -->
+    <?php
+    // Displays an error message on the site if one is set 
+    if (isset($errorMessage)) {
+        echo $errorMessage;
+    }
+    ?>
     <div style=" display: block;margin-left: auto;margin-right: auto;width: max-content;">
-        <form action="?register=1" method="post">
-            <h1>Offene Termine</h1>
-            <?php
-            foreach ($events as &$event) {
-                drawEvent($event, $database, $user);
-            }
-            ?>
-        </form>
+        <h1>Offene Termine</h1>
+        <?php
+        foreach ($events as &$event) { 
+            $alreadyJoined = $database->isUserJoinedEvent($event->id, $user->id);?>
+            <div class="event-area <?php if ($alreadyJoined) echo 'event-joined' ?>">
+
+                <h2 class="event-heading"> <?php echo $event->heading ?> </h2>
+                <h3> <?php echo $event->description ?> </h3>
+                <p> Die Veranstaltung findet am <?php echo $event->eventDate ?> statt.</p>
+                <form action="?joinEvent=1" method="post">
+                    <input type="text" name="eventId" value="<?php echo $event->id ?>" hidden="true">
+                    <?php if (!$alreadyJoined) echo '<input type="submit" value="Teilnehem">' ?>
+                </form>
+            </div>
+        <?php
+        }
+        ?>
     </div>
     <!-- Footer -->
     <footer>
