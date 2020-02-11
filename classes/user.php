@@ -1,5 +1,5 @@
 <?php
-//Definition der Klasse User
+// Definition of the user class
 class User {
 
 	public $id;
@@ -7,16 +7,5 @@ class User {
 	public $firstname;
 	public $lastname;
 	public $userRole;
-
-
-	public function createUserFromDB($sqlResult){
-		$GLOBALS['id'] = $sqlResult['id'];
-		$GLOBALS['email'] = $sqlResult['email'];
-		$GLOBALS['firstname'] = $sqlResult['firstname'];
-		$GLOBALS['lastname'] = $sqlResult['lastname'];
-		$GLOBALS['userRole'] = $sqlResult['user_role'];
-
-		
-	}
 }
 ?>

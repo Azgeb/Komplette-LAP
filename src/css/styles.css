@@ -12,6 +12,7 @@ footer {
     background-color: gray;
     color: whitesmoke;
     text-align: center;
+    border-top: black solid 1px;
 }
 
 ul {

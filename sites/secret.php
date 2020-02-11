@@ -3,28 +3,32 @@ session_start();
 require_once(__DIR__ . '/../modules/config.php');
 require_once('../classes/user.php');
 
-
+// creates a new empty user Object
 $user = new User();
+/*
+unsearialies the previous serialised user 
+and saves it as the newly created user
+*/
 $user = unserialize($_SESSION['user']);
 
+// Checks if the user is set respectively if the email is set
 if (!$user || !$user->email) {
     // Asks the user to login if the secret.php got accesed via the searchbar 
     die('Bitte zuerst <a href="login.php">einloggen</a>');
 }
-// Following code reads the logged in user from the session storage 
+// Reads all events from the database 
 $events = $database->getEvents();
 
+// Checks if the joinEvent form is submited
 if (isset($_GET['joinEvent'])) {
-
+    // sets the submited eventId and joins the event as the logged in user
     $eventId = $_POST['eventId'];
-    echo '<script>';
-    echo 'console.log(' . json_encode($eventId) . ')';
-    echo '</script>';
     $result = $database->joinEvent($eventId, $user->id);
+    //Checks the response from the database operation
     if ($result && $result !== false) {
         //header("Location: /sites/admin.php", true, 301);
     } else {
-        // Dispays an error if the user is invalide 
+        // Sets the errorMessage variable 
         $errorMessage = "Ein Fehler ist aufgetreten.<br>";
     }
 }
@@ -32,12 +36,9 @@ if (isset($_GET['joinEvent'])) {
 
 <!DOCTYPE html>
 <html lang="en">
-<title>Website</title>
+<title>Logged In</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <link rel="stylesheet" href="/../src/css/styles.css">
 <link rel="stylesheet" href="/../src/css/navbar.css">
@@ -63,13 +64,17 @@ if (isset($_GET['joinEvent'])) {
     <div style=" display: block;margin-left: auto;margin-right: auto;width: max-content;">
         <h1>Offene Termine</h1>
         <?php
-        foreach ($events as &$event) { 
-            $alreadyJoined = $database->isUserJoinedEvent($event->id, $user->id);?>
-            <div class="event-area <?php if ($alreadyJoined) echo 'event-joined' ?>">
-
+        // creates one entry in the html for each object in the events array
+        foreach ($events as &$event) {
+            // Checks if the user alredy joined an event
+            $alreadyJoined = $database->isUserJoinedEvent($event->id, $user->id); ?>
+            <div class="event-area <?php
+                                    // Sets a HTML class depending on the alreadyJoined variable
+                                    if ($alreadyJoined) echo 'event-joined'
+                                    ?>">
                 <h2 class="event-heading"> <?php echo $event->heading ?> </h2>
                 <h3> <?php echo $event->description ?> </h3>
-                <p> Die Veranstaltung findet am <?php echo $event->eventDate ?> statt.</p>
+                <p> Die Veranstaltung findet am <?php echo $event->eventDate->format('d.m.Y') ?> statt.</p>
                 <form action="?joinEvent=1" method="post">
                     <input type="text" name="eventId" value="<?php echo $event->id ?>" hidden="true">
                     <?php if (!$alreadyJoined) echo '<input type="submit" value="Teilnehem">' ?>

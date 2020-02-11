@@ -1,5 +1,5 @@
 <?php
-//Definition der Klasse User
+// Definiton of the event class
 class Event {
 
 	public $id;

@@ -3,16 +3,26 @@ session_start();
 require_once(__DIR__ . '/../modules/config.php');
 require_once('../classes/user.php');
 
+// creates a new empty user Object
 $user = new User();
+/*
+unsearialies the previous serialised user 
+and saves it as the newly created user
+*/
 $user = unserialize($_SESSION['user']);
 
-if (!$user || !$user->userRole == 0) {
-    // Asks the user to login if the secret.php got accesed via the searchbar 
-    die('Bitte zuerst <a href="login.php">einloggen</a>');
+// Determins if the User in the session storage is set and an admin
+if ($user) {
+    /*
+    Asks the user to login if the secret.php got accesed via the searchbar
+    and no User is in the session storage
+    */
+    if(!$user->userRole == 0){
+        die('als admin <a href="logout.php">einloggen</a>');
+    }
+} else {
+    die('Bitte zuerst <a href="logout.php">einloggen</a>');
 }
-// Following code reads the logged in user from the session storage 
-$events = $database->getEvents();
-
 ?>
 
 <!DOCTYPE html>
@@ -20,9 +30,6 @@ $events = $database->getEvents();
 <title>Website</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <link rel="stylesheet" href="/../src/css/styles.css">
 <link rel="stylesheet" href="/../src/css/navbar.css">
@@ -41,6 +48,7 @@ $events = $database->getEvents();
     <!-- Div that centers the displayed register form -->
     <div style=" display: block;margin-left: auto;margin-right: auto; margin-top: 2rem;width: max-content;">
         <?php
+        // Provides a list of links for admin features
         echo 'Veranstaltung <a href="/sites/createEvent.php">erstellen</a></br></br>';
         echo 'User <a href="/sites/createUser.php">erstellen</a>';
         ?>

@@ -2,60 +2,86 @@
 session_start();
 require_once(__DIR__ . '/../modules/config.php');
 
+// creates a new empty user Object
 $user = new User();
+/*
+unsearialies the previous serialised user 
+and saves it as the newly created user
+*/
 $user = unserialize($_SESSION['user']);
 
-if (!$user || !$user->userRole == 0) {
-    // Asks the user to login if the secret.php got accesed via the searchbar 
-    die('Bitte zuerst <a href="login.php">einloggen</a>');
-}
+// Determins if the User in the session storage is set and an admin
+if ($user) {
+    /*
+    Asks the user to login if the secret.php got accesed via the searchbar
+    and no User is in the session storage
+    */
+    if (!$user->userRole == 0) {
+        die('als admin <a href="logout.php">einloggen</a>');
+    } else {
+        // Checks if the register form is submited
+        if (isset($_GET['register'])) {
+            // Creates a new user object
+            $newUser = new User();
+            // Sets up the needed variables 
+            $error = false;
+            $newUser->email = $_POST['email'];
+            $newUser->password = $_POST['password'];
+            $newUser->userRole = $_POST['userRole'];
+            $passwordConfirm = $_POST['passwordConfirm'];
 
-if (isset($_GET['register'])) {
-    $newEvent = new User();
-    $error = false;
-    $newEvent->email = $_POST['email'];
-    $newEvent->password = $_POST['password'];
-    $newEvent->userRole = $_POST['userRole'];
+            // Checks if the given email is a valide email (formwise)
+            if (!filter_var($newUser->email, FILTER_VALIDATE_EMAIL)) {
+                // Sets the errorMessage variable 
+                $errorMessage = 'Bitte eine gültige E-Mail-Adresse eingeben<br>';
+                $error = true;
+            }
 
-    if (!filter_var($newEvent->email, FILTER_VALIDATE_EMAIL)) {
-        // Displayes a message under the navbar 
-        $errorMessage = 'Bitte eine gültige E-Mail-Adresse eingeben<br>';
-        $error = true;
-    }
-    if (strlen($newEvent->password) == 0) {
-        // Displayes a message under the navbar 
-        $errorMessage = 'Bitte ein password angeben<br>';
-        $error = true;
-    }
-    if ($newEvent->password != $_POST['passwordConfirm']) {
-        // Displayes a message under the navbar 
-        $errorMessage = 'Die Passwörter müssen übereinstimmen<br>';
-        $error = true;
-    }
+            // Checks if the given email has at least one char
+            if (strlen($newUser->password) == 0) {
+                // Sets the errorMessage variable 
+                $errorMessage = 'Bitte ein password angeben<br>';
+                $error = true;
+            }
 
-    if (!$error) {
-        $user = $database->getUser($email);
+            // Checks if the passwords matches
+            if ($newUser->password != $passwordConfirm) {
+                // Sets the errorMessage variable 
+                $errorMessage = 'Die Passwörter müssen übereinstimmen<br>';
+                $error = true;
+            }
 
-        if ($user) {
-            // Displayes a message under the navbar 
-            $errorMessage = 'Diese E-Mail-Adresse ist bereits vergeben<br>';
-            $error = true;
+            // Validates that the email is not registered yet 
+            if (!$error) {
+                $databaseUser = $database->getUser($newUser->email);
+
+                // Checks the response from the database
+                if ($databaseUser->email) {
+
+                    // Sets the errorMessage variable 
+                    $errorMessage = 'Diese E-Mail-Adresse ist bereits vergeben<br>';
+                    $error = true;
+                }
+            }
+            // Regisers a new user 
+            if (!$error) {
+                $result = $database->createUser($newUser);
+                if ($result) {
+                    /* 
+                    Displayes a html tag to confirn the creation of an new user
+                    and provides a link to th login. 
+                    */
+                    $message = 'User wurde erfolgreich registriert.</a>';
+                } else {
+                    
+                    // Sets the errorMessage variable 
+                    $errorMessage = 'Beim Abspeichern ist leider ein Fehler aufgetreten<br>';
+                }
+            }
         }
     }
-    // Regisers a new user 
-    if (!$error) {
-        $result = $database->createUser($newEvent->email, $newEvent->password, $newEvent->userRole);
-        if ($result) {
-            /* 
-            Displayes a html tag to confirn the creation of an new user
-            and provides a link to th login. 
-            */
-            $errorMessage = 'User wurde erfolgreich registriert.</a>';
-        } else {
-            // Displayes a message under the navbar 
-            $errorMessage = 'Beim Abspeichern ist leider ein Fehler aufgetreten<br>';
-        }
-    }
+} else {
+    die('Bitte zuerst <a href="logout.php">einloggen</a>');
 }
 ?>
 <!DOCTYPE html>
@@ -63,9 +89,6 @@ if (isset($_GET['register'])) {
 <title>Register</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <link rel="stylesheet" href="/../src/css/styles.css">
 <link rel="stylesheet" href="/../src/css/navbar.css">
@@ -86,6 +109,11 @@ if (isset($_GET['register'])) {
     if (isset($errorMessage)) {
         echo $errorMessage;
     }
+
+    // Displays a message on the site if one is set 
+    if (isset($message)) {
+        echo $message;
+    }
     ?>
     <!-- Div that centers the displayed register form -->
     <div style=" display: block;margin-left: auto;margin-right: auto;width: max-content;">
@@ -98,8 +126,8 @@ if (isset($_GET['register'])) {
             <input type="password" size="40" maxlength="250" name="passwordConfirm"><br><br>
             User Rolle<br>
             <select name="userRole">
-                <option value="0">Admin</option>
                 <option value="1">User</option>
+                <option value="0">Admin</option>
             </select><br><br>
             <input type="submit" value="Abschicken">
         </form>

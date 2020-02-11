@@ -10,48 +10,46 @@ class Database
     private $database;
 
     // The constructor gets called when the class gets created 
-    public function __construct($host, $dbname, $user, $password)
-    {
+    public function __construct($host, $dbname, $user, $password){
+        // Opens the database connection with the variables from the config.php
         $this->database = new PDO('mysql:host=' . $host . ';dbname=' . $dbname, $user, $password);
         $this->database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
     }
 
     // Database-Getter 
-    public function getDatabase()
-    {
+    public function getDatabase(){
         return $this->database;
     }
 
     // Performs a query on the database
-    public function query($query)
-    {
+    public function query($query){
         return $this->database->query($query);
     }
 
     // Create a new user
-    public function createUser($email, $password, $userRole)
-    {
+    public function createUser($user){
 
         // Prepares the db-statement 
         $statement = $this->database->prepare("INSERT INTO `t_user` (`email`, `password`,`user_role`) VALUES (:email,:password,:userRole)");
-        $statement->bindParam(':email', $email);
-        $statement->bindParam(':password', password_hash($password, PASSWORD_DEFAULT));
-        $statement->bindParam(':userRole', $userRole);
+        $statement->bindParam(':email', $user->email);
+        $statement->bindParam(':password', password_hash($user->password, PASSWORD_DEFAULT));
+        $statement->bindParam(':userRole', $user->userRole);
 
         // Executes the  query and returns the result
         return $statement->execute();
     }
 
     // Delete an User by id
-    public function deleteUser($id)
-    {
-        $query = 'UPDATE `user` SET `active` = 0 WEHRE `id` = ' . $id;
+    /*
+    public function deleteUser($id){
+        $query = 'UPDATE `t_user` SET `active` = 0 WEHRE `id` = ' . $id;
         return $this->query($query);
     }
+    */
 
     // Updates an user by an new user object
-    public function updateUser($user)
-    {
+    public function updateUser($user){
+        
         // Prepare db-statements
         $statement = $this->database->prepare("UPDATE t_user SET firstname = :firstname , lastname = :lastname  WHERE id = :id");
         $statement->bindParam(':id', $user->id);
@@ -62,27 +60,30 @@ class Database
         return $statement->execute();
     }
 
-    // Gets an User by the email
-    public function getUser($email)
-    {
-
+    // Gets an user by the email
+    public function getUser($email){
+        
+        // Prepare db-statements
         $statement = $this->database->prepare("SELECT * FROM t_user WHERE email = :email");
         $statement->execute(array('email' => $email));
         $sqlResult = $statement->fetch();
 
-        $user = new User();
-        $user->id = $sqlResult['id'];
-        $user->email = $sqlResult['email'];
-        $user->password = $sqlResult['password'];
-        $user->firstname = $sqlResult['firstname'];
-        $user->lastname = $sqlResult['lastname'];
-        $user->userRole = $sqlResult['user_role'];
-
+        // Creates the user from the returned row if one is returned
+        if (count($sqlResult) > 0) {
+            $user = new User();
+            $user->id = $sqlResult['id'];
+            $user->email = $sqlResult['email'];
+            $user->password = $sqlResult['password'];
+            $user->firstname = $sqlResult['firstname'];
+            $user->lastname = $sqlResult['lastname'];
+            $user->userRole = $sqlResult['user_role'];
+        }
+        // Returns the user
         return $user;
     }
 
-    public function createEvent($event)
-    {
+    // Creates a new event 
+    public function createEvent($event){
 
         // Prepares the db-statement 
         $statement = $this->database->prepare("INSERT INTO `t_event` (`heading`, `description`, `event_date`) VALUES (:heading, :description, :eventDate)");
@@ -94,29 +95,33 @@ class Database
         return $statement->execute();
     }
 
-    public function getEvents()
-    {
+    // Get all events
+    public function getEvents(){
 
+        // Prepares the db-statement 
         $statement = $this->database->prepare("SELECT * FROM t_event");
         $statement->execute();
         $sqlResult = $statement->fetchAll();
 
+        // creates an Array
         $events =array();
-       
 
+        // Creates and pushes an event for each returned row
         foreach ($sqlResult as &$SqlEvent) {
             $event = new Event();
             $event->id = $SqlEvent['id'];
             $event->heading = $SqlEvent['heading'];
             $event->description = $SqlEvent['description'];
-            $event->eventDate = $SqlEvent['event_date'];
+            $event->eventDate = new DateTime($SqlEvent['event_date']);
             array_push($events, $event);
         }
+
+        // Returns an array of event objects 
         return $events;
     }
 
-    public function joinEvent($eventId, $userId)
-    {
+    // Joins an event
+    public function joinEvent($eventId, $userId){
 
         // Prepares the db-statement 
         $statement = $this->database->prepare("INSERT INTO `t_event_user` (`event_id`, `user_id`) VALUES (:eventId,:userId)");
@@ -127,39 +132,45 @@ class Database
         return $statement->execute();
     }
 
-    public function isUserJoinedEvent($eventId, $userId)
-    {
+    // Checks if a users is joined an event
+    public function isUserJoinedEvent($eventId, $userId){
 
         // Prepares the db-statement 
         $statement = $this->database->prepare("SELECT * FROM `t_event_user` WHERE event_id = :eventId AND user_id = :userId");
         $statement->execute(array('eventId' => $eventId, 'userId' => $userId));
         $result = $statement->fetchAll();
 
+        // Returns true or false if a row gets returned or not 
         if (count($result) > 0) {
             return true;
         } else {
             return false;
         }
-        // Executes the  query and returns the result
 
     }
+
     // Determines if a user login attempt succeeds or fails
-    public function login($email, $password)
-    {
+    public function login($email, $password){
+        
+        // Checks if the user is in the database 
         $user = $this->getUser($email);
-        echo '<script>';
-        echo 'console.log(' . json_encode($user) . ')';
-        echo '</script>';
+    
+        // Cecks if a user got returned
         if ($user) {
+
+            // Checks if the provides password matches
             if (password_verify($password, $user->password)) {
-                echo '<script>';
-                echo 'console.log(' . json_encode($user) . ')';
-                echo '</script>';
+                
+                // Returns the user
                 return $user;
             } else {
+
+                // Password didn't match
                 return false;
             }
         } else {
+            
+            // email is not in the database 
             return false;
         }
     }
