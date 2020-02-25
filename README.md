@@ -1,7 +1,7 @@
 
 # :pencil2: Lehrabschlussprüfung 13.02.2020 (Graz / Steiermark)  
   
-Dieses Repository wurde als Vorbereitung auf die Lehrabschlussprüfung am 13.02.2019 an der WKO in Graz angelegt und danach um die Aufgabenstellung (Gedächtnisprotokoll) erweitert.  
+Dieses Repository wurde als Vorbereitung auf die Lehrabschlussprüfung am 13.02.2020 an der WKO in Graz angelegt und danach um die Aufgabenstellung (Gedächtnisprotokoll) erweitert.  
   
 ```  
 Wichtig!!  
