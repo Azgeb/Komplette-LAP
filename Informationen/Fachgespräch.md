@@ -12,7 +12,8 @@ In diesem Dokument finden Sie die drei Themenschwerpunkte die ich basierend auf 
 - Sie wollen eine komplette Tabelle löschen. Mit welchem Keyword können Sie das erreichen?  
 - Sie erstellen eine Datenbankabfrage welche als Tabellenüberschrift "firstname" Besitz. Wie schaffen Sie es das statt "firstname"  "Vorname" als Tabellenname angezeigt wird?  
   
-##   :computer: Programmiersprachen / Programmieren- Was sind Compilersprachen ?- Was sind Interpretersprachen?  
+##   :computer: Programmiersprachen / Programmieren
+- Was sind Compilersprachen ?- Was sind Interpretersprachen?  
 - Was ist ein Compiler?  
 - Was ist ein Interpreter?  
 - Welche Vorteile/Nachteile haben Compiler / Interpreter?  
