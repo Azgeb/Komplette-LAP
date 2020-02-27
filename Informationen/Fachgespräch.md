@@ -20,7 +20,8 @@ In diesem Dokument finden Sie die drei Themenschwerpunkte die ich basierend auf 
 - Welche Möglichkeiten kennen Sie Cross-Plattform native Programme zu entwickeln?  
 - Was wird benötigt um Webseiten auf unterschiedlichen Browsern und Geräten anders darzustellen?  
   
-##   :office: Arbeitsabläufe- Welche Maßnahmen gibt es Datenbanken von Kunden DSGVO Konform im Betrieb aufzubewahren?  
+##   :office: Arbeitsabläufe
+- Welche Maßnahmen gibt es Datenbanken von Kunden DSGVO Konform im Betrieb aufzubewahren?  
 - Was ist das Anonymisieren von Datenbaken?  
 - Was ist, der große unterschied zwischen anonymisieren und Pseudonymisieren?  
 - Sie sind gerade neu in ein Unternehmen eingestiegen, ein Kollege kommt zu Ihnen und sagt "In 10 Minuten gehen wir Pokern" was ist damit gemeint? Kommen Sie mit Chips und Bier oder mit Block und Stift?
