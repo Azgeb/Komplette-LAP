@@ -13,9 +13,6 @@ class Database
     // The constructor gets called when the class gets created 
     public function __construct($host, $dbname, $user, $password){
         // Opens the database connection with the variables from the config.php
-        $this->database = new PDO('mysql:host=' . $host . ';dbname=' . $dbname, $user, $password);
-        $this->database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-
         $this->mysqli = new mysqli($host, $user, $password, $dbname);
         if ($this->mysqli->connect_errno) {
             echo "Failed to connect to MySQL: " . $this->mysqli->connect_error;
@@ -35,14 +32,13 @@ class Database
     // Create a new user
     public function createUser($user){
 
+        // hash th password 
+        $hashedPassword = password_hash($user->password, PASSWORD_DEFAULT);
         // Prepares the db-statement 
-        $statement = $this->database->prepare("INSERT INTO `t_user` (`email`, `password`,`user_role`) VALUES (:email,:password,:userRole)");
-        $statement->bindParam(':email', $user->email);
-        $statement->bindParam(':password', password_hash($user->password, PASSWORD_DEFAULT));
-        $statement->bindParam(':userRole', $user->userRole);
+        $statement = "INSERT INTO `t_user` (`email`, `password`,`user_role`) VALUES ('$user->email','$hashedPassword','$user->userRole')";
 
         // Executes the  query and returns the result
-        return $statement->execute();
+        return  $this->mysqli->query($statement);
     }
 
     // Delete an User by id
@@ -57,21 +53,18 @@ class Database
     public function updateUser($user){
         
         // Prepare db-statements
-        $statement = $this->database->prepare("UPDATE t_user SET firstname = :firstname , lastname = :lastname  WHERE id = :id");
-        $statement->bindParam(':id', $user->id);
-        $statement->bindParam(':firstname', $user->firstname);
-        $statement->bindParam(':lastname', $user->lastname);
+        $statement = "UPDATE t_user SET firstname = '$user->firstname' , lastname = '$user->lastname'  WHERE id = '$user->id'";
 
         // Execute query and return
-        return $statement->execute();
+        return  $this->mysqli->query($statement);
     }
 
     // Gets an user by the email
     public function getUser($email){
         
         // Prepare db-statements
-        $sql = "SELECT * FROM t_user WHERE email = '$email';";
-        $result = mysqli_query($this->mysqli,$sql);
+        $statement = "SELECT * FROM t_user WHERE email = '$email';";
+        $result = mysqli_query($this->mysqli,$statement);
 
         // Associative array
         $sqlResult = mysqli_fetch_array($result, MYSQLI_ASSOC);
@@ -94,21 +87,18 @@ class Database
     public function createEvent($event){
 
         // Prepares the db-statement 
-        $statement = $this->database->prepare("INSERT INTO `t_event` (`heading`, `description`, `event_date`) VALUES (:heading, :description, :eventDate)");
-        $statement->bindParam(':heading', $event->heading);
-        $statement->bindParam(':description', $event->description);
-        $statement->bindParam(':eventDate', $event->eventDate);
+        $statement = "INSERT INTO `t_event` (`heading`, `description`, `event_date`) VALUES ('$event->heading', '$event->description', '$event->eventDate')";
 
         // Executes the  query and returns the result
-        return $statement->execute();
+        return $this->mysqli->query($statement);
     }
 
     // Get all events
     public function getEvents(){
 
         // Prepare db-statements
-        $sql = "SELECT * FROM t_event";
-        $result = mysqli_query($this->mysqli,$sql);
+        $statement = "SELECT * FROM t_event";
+        $result = mysqli_query($this->mysqli,$statement);
 
         // Associative array
         $sqlResult = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -132,22 +122,15 @@ class Database
     public function joinEvent($eventId, $userId){
 
         // Prepares the db-statement 
-        $statement = $this->database->prepare("INSERT INTO `t_event_user` (`event_id`, `user_id`) VALUES (:eventId,:userId)");
-        $statement->bindParam(':eventId', $eventId);
-        $statement->bindParam(':userId', $userId);
+        $statement = "INSERT INTO `t_event_user` (`event_id`, `user_id`) VALUES ('$eventId','$userId')";
 
         // Executes the  query and returns the result
-        return $statement->execute();
+        return $this->mysqli->query($statement);
     }
 
     // Checks if a users is joined an event
     public function isUserJoinedEvent($eventId, $userId){
-
-        // Prepares the db-statement 
-        $statement = $this->database->prepare("SELECT * FROM `t_event_user` WHERE event_id = :eventId AND user_id = :userId");
-        $statement->execute(array('eventId' => $eventId, 'userId' => $userId));
-        $result = $statement->fetchAll();
-
+        
         // Prepare db-statements
         $sql = "SELECT * FROM `t_event_user` WHERE event_id = '$eventId' AND user_id = '$userId'";
         $result = mysqli_query($this->mysqli,$sql);
