@@ -8,12 +8,18 @@ class Database
 
     // Private variable that can only be called inside the class and it's child objects 
     private $database;
+    private $mysqli;
 
     // The constructor gets called when the class gets created 
     public function __construct($host, $dbname, $user, $password){
         // Opens the database connection with the variables from the config.php
         $this->database = new PDO('mysql:host=' . $host . ';dbname=' . $dbname, $user, $password);
         $this->database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+
+        $this->mysqli = new mysqli($host, $user, $password, $dbname);
+        if ($this->mysqli->connect_errno) {
+            echo "Failed to connect to MySQL: " . $this->mysqli->connect_error;
+        }
     }
 
     // Database-Getter 
@@ -64,9 +70,11 @@ class Database
     public function getUser($email){
         
         // Prepare db-statements
-        $statement = $this->database->prepare("SELECT * FROM t_user WHERE email = :email");
-        $statement->execute(array('email' => $email));
-        $sqlResult = $statement->fetch();
+        $sql = "SELECT * FROM t_user WHERE email = '$email';";
+        $result = mysqli_query($this->mysqli,$sql);
+
+        // Associative array
+        $sqlResult = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
         // Creates the user from the returned row if one is returned
         if (count($sqlResult) > 0) {
@@ -98,14 +106,15 @@ class Database
     // Get all events
     public function getEvents(){
 
-        // Prepares the db-statement 
-        $statement = $this->database->prepare("SELECT * FROM t_event");
-        $statement->execute();
-        $sqlResult = $statement->fetchAll();
+        // Prepare db-statements
+        $sql = "SELECT * FROM t_event";
+        $result = mysqli_query($this->mysqli,$sql);
+
+        // Associative array
+        $sqlResult = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
         // creates an Array
         $events =array();
-
         // Creates and pushes an event for each returned row
         foreach ($sqlResult as &$SqlEvent) {
             $event = new Event();
@@ -115,7 +124,6 @@ class Database
             $event->eventDate = new DateTime($SqlEvent['event_date']);
             array_push($events, $event);
         }
-
         // Returns an array of event objects 
         return $events;
     }
@@ -140,8 +148,16 @@ class Database
         $statement->execute(array('eventId' => $eventId, 'userId' => $userId));
         $result = $statement->fetchAll();
 
+        // Prepare db-statements
+        $sql = "SELECT * FROM `t_event_user` WHERE event_id = '$eventId' AND user_id = '$userId'";
+        $result = mysqli_query($this->mysqli,$sql);
+
+        // Associative array
+        $sqlResult = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+
         // Returns true or false if a row gets returned or not 
-        if (count($result) > 0) {
+        if (count($sqlResult) > 0) {
             return true;
         } else {
             return false;
