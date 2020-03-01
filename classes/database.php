@@ -41,7 +41,26 @@ class Database
         // hash th password 
         $hashedPassword = password_hash($user->password, PASSWORD_DEFAULT);
         // Prepares the db-statement 
-        $statement = "INSERT INTO `t_user` (`email`, `password`,`user_role`) VALUES ('$user->email','$hashedPassword','$user->userRole')";
+        $statement = "INSERT INTO `t_user` (`email`, `password`,`course_id`, `firstname`,`lastname`, `postal_code`,`city`, `street`) 
+        VALUES ('$user->email','$hashedPassword','$user->courseId','$user->firstname','$user->lastname','$user->postalCode','$user->city','$user->street')";
+
+echo '<script>';
+echo 'console.log('. json_encode( $statement ) .')';
+echo '</script>';
+        // Executes the  query and returns the result
+        return  $this->mysqli->query($statement);
+    }
+
+    // Create a new user
+    public function createInternalUser($internalUser)
+    {
+
+        // hash th password 
+        $hashedPassword = password_hash($internalUser->password, PASSWORD_DEFAULT);
+        // Prepares the db-statement 
+        $statement = "INSERT INTO `t_internal_user` (`email`, `password`,`is_administrator`, `firstname`,`lastname`, `postal_code`,`city`, `street`) 
+        VALUES ('$internalUser->email','$hashedPassword','$internalUser->isAdministrator','$internalUser->firstname','$internalUser->lastname',
+        '$internalUser->postalCode','$internalUser->city','$internalUser->street')";
 
         // Executes the  query and returns the result
         return  $this->mysqli->query($statement);
@@ -95,7 +114,7 @@ class Database
     }
 
     // Gets an user by the email
-    public function getUserIntern($email)
+    public function getInternalUser($email)
     {
 
         // Prepare db-statements
@@ -107,9 +126,9 @@ class Database
 
         // Creates the user from the returned row if one is returned
         if (count($sqlResult) > 0) {
-            $user = new User();
-            $user->userId = $sqlResult['user_id'];
-            $user->courseId = $sqlResult['course_id'];
+            $user = new InternalUser();
+            $user->internalUserId = $sqlResult['internal_user_id'];
+            $user->isAdministrator = $sqlResult['is_administrator'];
             $user->email = $sqlResult['email'];
             $user->password = $sqlResult['password'];
             $user->firstname = $sqlResult['firstname'];
@@ -248,7 +267,7 @@ class Database
     {
 
         // Checks if the user is in the database 
-        $user = $this->getUserIntern($email);
+        $user = $this->getInternalUser($email);
         
         // Cecks if a user got returned
         if ($user) {

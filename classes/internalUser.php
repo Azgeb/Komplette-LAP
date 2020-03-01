@@ -2,8 +2,8 @@
 // Definition of the user class
 class InternalUser {
 
-	public $internal_user_id;
-	public $is_administrator;
+	public $internalUserId;
+	public $isAdministrator;
 	public $email;
 	public $firstname;
 	public $lastname;
