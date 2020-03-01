@@ -1,7 +1,9 @@
 <?php
 
 require_once('../classes/user.php');
-require_once('../classes/event.php');
+require_once('../classes/internalUser.php');
+require_once('../classes/course.php');
+require_once('../classes/document.php');
 
 class Database
 {
@@ -11,7 +13,8 @@ class Database
     private $mysqli;
 
     // The constructor gets called when the class gets created 
-    public function __construct($host, $dbname, $user, $password){
+    public function __construct($host, $dbname, $user, $password)
+    {
         // Opens the database connection with the variables from the config.php
         $this->mysqli = new mysqli($host, $user, $password, $dbname);
         if ($this->mysqli->connect_errno) {
@@ -20,17 +23,20 @@ class Database
     }
 
     // Database-Getter 
-    public function getDatabase(){
+    public function getDatabase()
+    {
         return $this->database;
     }
 
     // Performs a query on the database
-    public function query($query){
+    public function query($query)
+    {
         return $this->database->query($query);
     }
 
     // Create a new user
-    public function createUser($user){
+    public function createUser($user)
+    {
 
         // hash th password 
         $hashedPassword = password_hash($user->password, PASSWORD_DEFAULT);
@@ -50,8 +56,9 @@ class Database
     */
 
     // Updates an user by an new user object
-    public function updateUser($user){
-        
+    public function updateUser($user)
+    {
+
         // Prepare db-statements
         $statement = "UPDATE t_user SET firstname = '$user->firstname' , lastname = '$user->lastname'  WHERE id = '$user->id'";
 
@@ -60,11 +67,12 @@ class Database
     }
 
     // Gets an user by the email
-    public function getUser($email){
-        
+    public function getUser($email)
+    {
+
         // Prepare db-statements
         $statement = "SELECT * FROM t_user WHERE email = '$email';";
-        $result = mysqli_query($this->mysqli,$statement);
+        $result = mysqli_query($this->mysqli, $statement);
 
         // Associative array
         $sqlResult = mysqli_fetch_array($result, MYSQLI_ASSOC);
@@ -72,19 +80,73 @@ class Database
         // Creates the user from the returned row if one is returned
         if (count($sqlResult) > 0) {
             $user = new User();
-            $user->id = $sqlResult['id'];
+            $user->userId = $sqlResult['user_id'];
+            $user->courseId = $sqlResult['course_id'];
             $user->email = $sqlResult['email'];
             $user->password = $sqlResult['password'];
             $user->firstname = $sqlResult['firstname'];
             $user->lastname = $sqlResult['lastname'];
-            $user->userRole = $sqlResult['user_role'];
+            $user->postalCode = $sqlResult['postalCode'];
+            $user->city = $sqlResult['city'];
+            $user->street = $sqlResult['street'];
         }
         // Returns the user
         return $user;
     }
 
+    // Gets an user by the email
+    public function getUserIntern($email)
+    {
+
+        // Prepare db-statements
+        $statement = "SELECT * FROM t_internal_user WHERE email = '$email';";
+        $result = mysqli_query($this->mysqli, $statement);
+
+        // Associative array
+        $sqlResult = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+        // Creates the user from the returned row if one is returned
+        if (count($sqlResult) > 0) {
+            $user = new User();
+            $user->userId = $sqlResult['user_id'];
+            $user->courseId = $sqlResult['course_id'];
+            $user->email = $sqlResult['email'];
+            $user->password = $sqlResult['password'];
+            $user->firstname = $sqlResult['firstname'];
+            $user->lastname = $sqlResult['lastname'];
+            $user->postalCode = $sqlResult['postalCode'];
+            $user->city = $sqlResult['city'];
+            $user->street = $sqlResult['street'];
+        }
+        // Returns the user
+        return $user;
+    }
+
+    public function getCourse($courseId)
+    {
+
+        // Prepare db-statements
+        $statement = "SELECT * FROM t_course WHERE course_id = '$courseId';";
+        $result = mysqli_query($this->mysqli, $statement);
+
+        // Associative array
+        $sqlResult = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+        // Creates the user from the returned row if one is returned
+        if (count($sqlResult) > 0) {
+            $course = new Course();
+            $course->courseId = $sqlResult['course_id'];
+            $course->name = $sqlResult['name'];
+            $course->internal_user_id = $sqlResult['internal_user_id'];
+        }
+
+        // Returns the user
+        return $course;
+    }
+
     // Creates a new event 
-    public function createEvent($event){
+    public function createEvent($event)
+    {
 
         // Prepares the db-statement 
         $statement = "INSERT INTO `t_event` (`heading`, `description`, `event_date`) VALUES ('$event->heading', '$event->description', '$event->eventDate')";
@@ -94,32 +156,33 @@ class Database
     }
 
     // Get all events
-    public function getEvents(){
+    public function getCourses()
+    {
 
         // Prepare db-statements
         $statement = "SELECT * FROM t_event";
-        $result = mysqli_query($this->mysqli,$statement);
+        $result = mysqli_query($this->mysqli, $statement);
 
         // Associative array
         $sqlResult = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
         // creates an Array
-        $events =array();
+        $courses = array();
         // Creates and pushes an event for each returned row
-        foreach ($sqlResult as &$SqlEvent) {
-            $event = new Event();
-            $event->id = $SqlEvent['id'];
-            $event->heading = $SqlEvent['heading'];
-            $event->description = $SqlEvent['description'];
-            $event->eventDate = new DateTime($SqlEvent['event_date']);
-            array_push($events, $event);
+        foreach ($sqlResult as &$SqlCourse) {
+            $course = new Course();
+            $course->courseId = $SqlCourse['course_id'];
+            $course->name = $SqlCourse['name'];
+            $course->internal_user_id = $SqlCourse['internal_user_id'];
+            array_push($courses, $course);
         }
         // Returns an array of event objects 
-        return $events;
+        return $courses;
     }
 
     // Joins an event
-    public function joinEvent($eventId, $userId){
+    public function joinEvent($eventId, $userId)
+    {
 
         // Prepares the db-statement 
         $statement = "INSERT INTO `t_event_user` (`event_id`, `user_id`) VALUES ('$eventId','$userId')";
@@ -129,37 +192,43 @@ class Database
     }
 
     // Checks if a users is joined an event
-    public function isUserJoinedEvent($eventId, $userId){
-        
+    public function getDocuments($courseId)
+    {
+
         // Prepare db-statements
-        $sql = "SELECT * FROM `t_event_user` WHERE event_id = '$eventId' AND user_id = '$userId'";
-        $result = mysqli_query($this->mysqli,$sql);
+        $sql = "SELECT * FROM `t_document` WHERE course_id = '$courseId'";
+        $result = mysqli_query($this->mysqli, $sql);
 
         // Associative array
         $sqlResult = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-
-        // Returns true or false if a row gets returned or not 
-        if (count($sqlResult) > 0) {
-            return true;
-        } else {
-            return false;
+        // creates an Array
+        $documents = array();
+        // Creates and pushes an event for each returned row
+        foreach ($sqlResult as &$SqlDocument) {
+            $document = new Document();
+            $document->documentId = $SqlDocument['document_id'];
+            $document->courseId = $SqlDocument['course_id'];
+            $document->path = $SqlDocument['path'];
+            $document->displayName = $SqlDocument['display_name'];
+            array_push($documents, $document);
         }
-
+        // Returns an array of event objects 
+        return $documents;
     }
 
     // Determines if a user login attempt succeeds or fails
-    public function login($email, $password){
-        
+    public function login($email, $password)
+    {
+
         // Checks if the user is in the database 
         $user = $this->getUser($email);
-    
+
         // Cecks if a user got returned
         if ($user) {
 
             // Checks if the provides password matches
             if (password_verify($password, $user->password)) {
-                
+
                 // Returns the user
                 return $user;
             } else {
@@ -168,9 +237,37 @@ class Database
                 return false;
             }
         } else {
-            
+
+            // email is not in the database 
+            return false;
+        }
+    }
+
+    // Determines if a user login attempt succeeds or fails
+    public function loginIntern($email, $password)
+    {
+
+        // Checks if the user is in the database 
+        $user = $this->getUserIntern($email);
+        
+        // Cecks if a user got returned
+        if ($user) {
+
+            // Checks if the provides password matches
+            if (password_verify($password, $user->password)) {
+               
+                // Returns the user
+                return $user;
+            } else {
+
+                // Password didn't match
+                return false;
+            }
+        } else {
+
             // email is not in the database 
             return false;
         }
     }
 }
+

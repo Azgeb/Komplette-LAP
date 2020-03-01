@@ -2,10 +2,13 @@
 // Definition of the user class
 class User {
 
-	public $id;
+	public $userId;
+	public $courseId;
 	public $email;
 	public $firstname;
 	public $lastname;
-	public $userRole;
+	public $postalCode;
+	public $city;
+	public $street;
 }
 ?>
