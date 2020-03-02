@@ -13,16 +13,12 @@ $user = unserialize($_SESSION['user']);
 
 // Checks if the user is set respectively if the email is set
 if (!$user || !$user->email) {
-    // Asks the user to login if the secret.php got accesed via the searchbar 
-    die('Bitte zuerst <a href="login.php">einloggen</a>');
+    // Asks the user to login if the userSite.php got accesed via the searchbar 
+    die('Bitte zuerst einloggen: <a href="login.php">User</a>  <a href="login.php">Interal User</a>');
 }
 // Reads all courses from the database 
 $course = $database->getCourse($user->courseId);
 $documents = $database->getDocuments($course->courseId);
-
-echo '<script>';
-echo 'console.log(' . json_encode($documents) . ')';
-echo '</script>';
 
 ?>
 
@@ -42,8 +38,8 @@ echo '</script>';
         <ul style="display: flex;">
             <li> <a href="../index.html" class="bar-item button padding-large white">Home</a></li>
             <div style="flex-grow: 1;"></div>
-            <?php if ($user->userRole == 0) echo '<li><a href="admin.php" class="bar-item button padding-large white">Admin Area</a></li>' ?>
-            <li><a href="logout.php" class="bar-item button padding-large white">Logout</a></li>
+            <li><a href="/sites/internLogin.php" class="bar-item button padding-large white">Internes Login</a></li>
+            <li><a href="/sites/logout.php" class="bar-item button padding-large white">Logout</a></li>
 
     </div>
     <!-- Content -->
@@ -54,7 +50,7 @@ echo '</script>';
     }
     ?>
     <div style=" display: block;margin-left: auto;margin-right: auto;width: max-content;">
-        <h1>Guten Tag,  <?php echo $user->firstname, ' ', $user->lastname ?> </h1>
+        <h1>Guten Tag, <?php echo $user->firstname, ' ', $user->lastname ?> </h1>
         <h3>Ihre Dokumente für den Kurs <?php echo $course->name ?> </h3>
         <table style="width:100%">
             <tr style="text-align: left;">
