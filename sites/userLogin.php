@@ -36,10 +36,10 @@ if (isset($_GET['login'])) {
     <!-- Navbar -->
     <div id="navbar">
         <ul style="display: flex;">
-            <li> <a href="index.html" class="bar-item button padding-large white">Home</a></li>
+            <li> <a href="../index.html" class="bar-item button padding-large white">Home</a></li>
             <div style="flex-grow: 1;"></div>
             <li><a href="/sites/internLogin.php" class="bar-item button padding-large white">Internes Login</a></li>
-            <li><a href="/sites/login.php" class="bar-item button padding-large white">Login</a></li>
+            <li><a href="/sites/userLogin.php" class="bar-item button padding-large white">Login</a></li>
         </ul>
     </div>
     <!-- Content -->
@@ -56,7 +56,6 @@ if (isset($_GET['login'])) {
             <input type="email" size="40" maxlength="250" name="email"><br><br>
             Dein Passwort:<br>
             <input type="password" size="40" maxlength="250" name="passwort"><br>
-            <a formnovalidate href="/sites/register.php">Registrieren</a>
             <input type="submit" value="Abschicken">
         </form>
     </div>
