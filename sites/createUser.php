@@ -13,10 +13,10 @@ $user = unserialize($_SESSION['user']);
 // Determins if the User in the session storage is set and an admin
 if ($user) {
     /*
-    Asks the user to login if the secret.php got accesed via the searchbar
+    Asks the user to login if the userSite.php got accesed via the searchbar
     and no User is in the session storage
     */
-    if (!$user->userRole == 0) {
+    if ($user->isAdministrator == 'n') {
         die('als admin <a href="logout.php">einloggen</a>');
     } else {
         // Checks if the register form is submited
@@ -28,6 +28,13 @@ if ($user) {
             $newUser->email = $_POST['email'];
             $newUser->password = $_POST['password'];
             $newUser->userRole = $_POST['userRole'];
+            $newUser->firstname = $_POST['firstname'];
+            $newUser->lastname = $_POST['lastname'];
+            $newUser->postalCode = $_POST['postalCode'];
+            $newUser->city = $_POST['city'];
+            $newUser->street = $_POST['street'];
+            $newUser->password = $_POST['password'];
+            $newUser->courseId = $_POST['courseId'];
             $passwordConfirm = $_POST['passwordConfirm'];
 
             // Checks if the given email is a valide email (formwise)
@@ -57,6 +64,7 @@ if ($user) {
 
                 // Checks the response from the database
                 if ($databaseUser->email) {
+
 
                     // Sets the errorMessage variable 
                     $errorMessage = 'Diese E-Mail-Adresse ist bereits vergeben<br>';
@@ -99,8 +107,8 @@ if ($user) {
         <ul style="display: flex;">
             <li> <a href="index.html" class="bar-item button padding-large white">Home</a></li>
             <div style="flex-grow: 1;"></div>
-            <?php if ($user->userRole == 0) echo '<li><a href="admin.php" class="bar-item button padding-large white">Admin Area</a></li>' ?>
-            <li><a href="/sites/login.php" class="bar-item button padding-large white">Login</a></li>
+            <?php if ($user->isAdministrator == 'y') echo '<li><a href="adminSite.php" class="bar-item button padding-large white">Admin Area</a></li>' ?>
+            <li><a href="/sites/logout.php" class="bar-item button padding-large white">Logout</a></li>
         </ul>
     </div>
     <!-- Content -->
@@ -124,10 +132,21 @@ if ($user) {
             <input type="password" size="40" maxlength="250" name="password"><br>
             Password wiederholen:<br>
             <input type="password" size="40" maxlength="250" name="passwordConfirm"><br><br>
-            User Rolle<br>
-            <select name="userRole">
-                <option value="1">User</option>
-                <option value="0">Admin</option>
+            Vorname:<br>
+            <input type="text" size="40" maxlength="250" name="firstname"><br><br>
+            Nachname:<br>
+            <input type="text" size="40" maxlength="250" name="lastname"><br><br>
+            Postleitzahl:<br>
+            <input type="text" size="40" maxlength="250" name="postalCode"><br><br>  
+            Stadt:<br>
+            <input type="text" size="40" maxlength="250" name="city"><br><br>
+            Strasse:<br>
+            <input type="text" size="40" maxlength="250" name="street"><br><br>
+            Kurs<br>
+            <select name="courseId">
+                <option value="1">Informatik</option>
+                <option value="2">Mechatronik</option>
+                <option value="3">Technik</option>
             </select><br><br>
             <input type="submit" value="Abschicken">
         </form>

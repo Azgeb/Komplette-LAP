@@ -11,11 +11,11 @@ if (isset($_GET['login'])) {
     // Validates the users provided and stores the user 
     $user = $database->loginIntern($email, $passwort);
 
-    // Checks if the user is set and not false and redirects to the secret.php 
+    // Checks if the user is set and not false and redirects to the userSite.php 
     if ($user && $user !== false) {
         // Saves the user class as an serealized value
         $_SESSION['user'] = serialize($user);
-        header("Location: /sites/secret.php", true, 301);
+        header("Location: /sites/adminSite.php", true, 301);
     } else {
         // Dispays an error if the user is invalide 
         $errorMessage = "E-Mail oder Passwort war ungültig<br>";
@@ -38,6 +38,7 @@ if (isset($_GET['login'])) {
         <ul style="display: flex;">
             <li> <a href="index.html" class="bar-item button padding-large white">Home</a></li>
             <div style="flex-grow: 1;"></div>
+            <li><a href="/sites/internLogin.php" class="bar-item button padding-large white">Internes Login</a></li>
             <li><a href="/sites/login.php" class="bar-item button padding-large white">Login</a></li>
         </ul>
     </div>
