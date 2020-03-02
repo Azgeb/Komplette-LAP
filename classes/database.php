@@ -44,9 +44,6 @@ class Database
         $statement = "INSERT INTO `t_user` (`email`, `password`,`course_id`, `firstname`,`lastname`, `postal_code`,`city`, `street`) 
         VALUES ('$user->email','$hashedPassword','$user->courseId','$user->firstname','$user->lastname','$user->postalCode','$user->city','$user->street')";
 
-echo '<script>';
-echo 'console.log('. json_encode( $statement ) .')';
-echo '</script>';
         // Executes the  query and returns the result
         return  $this->mysqli->query($statement);
     }
@@ -111,6 +108,65 @@ echo '</script>';
         }
         // Returns the user
         return $user;
+    }
+
+    public function getAllUser()
+    {
+
+        // Prepare db-statements
+        $statement = "SELECT * FROM t_user;";
+        $result = mysqli_query($this->mysqli, $statement);
+
+        // Associative array
+        $sqlResult = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+        $allUser = array();
+        // Creates and pushes an event for each returned row
+        foreach ($sqlResult as &$SqlUser) {
+            $user = new User();
+            $user->userId = $SqlUser['user_id'];
+            $user->courseId = $SqlUser['course_id'];
+            $user->email = $SqlUser['email'];
+            $user->password = $SqlUser['password'];
+            $user->firstname = $SqlUser['firstname'];
+            $user->lastname = $SqlUser['lastname'];
+            $user->postalCode = $SqlUser['postalCode'];
+            $user->city = $SqlUser['city'];
+            $user->street = $SqlUser['street'];
+            array_push($allUser, $user);
+        }
+        // Returns the user
+        return $allUser;
+    }
+
+    public function getAllInternalUser()
+    {
+
+        // Prepare db-statements
+        $statement = "SELECT * FROM t_internal_user;";
+        $result = mysqli_query($this->mysqli, $statement);
+
+        // Associative array
+        $sqlResult = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+        $internlaUsers = array();
+        // Creates and pushes an event for each returned row
+        foreach ($sqlResult as &$SqlInternalUser) {
+            $internalUser = new InternalUser();
+            $internalUser->internalUserId = $SqlInternalUser['internal_user_id'];
+            $internalUser->isAdministrator = $SqlInternalUser['is_administrator'];
+            $internalUser->email = $SqlInternalUser['email'];
+            $internalUser->password = $SqlInternalUser['password'];
+            $internalUser->firstname = $SqlInternalUser['firstname'];
+            $internalUser->lastname = $SqlInternalUser['lastname'];
+            $internalUser->postalCode = $SqlInternalUser['postalCode'];
+            $internalUser->city = $SqlInternalUser['city'];
+            $internalUser->street = $SqlInternalUser['street'];
+            array_push($internlaUsers, $internalUser);
+        }
+
+        // Returns an array of event objects 
+        return $internlaUsers;
     }
 
     // Gets an user by the email
@@ -268,13 +324,13 @@ echo '</script>';
 
         // Checks if the user is in the database 
         $user = $this->getInternalUser($email);
-        
+
         // Cecks if a user got returned
         if ($user) {
 
             // Checks if the provides password matches
             if (password_verify($password, $user->password)) {
-               
+
                 // Returns the user
                 return $user;
             } else {
@@ -289,4 +345,3 @@ echo '</script>';
         }
     }
 }
-
