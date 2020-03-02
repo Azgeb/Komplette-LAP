@@ -14,7 +14,7 @@ $user = unserialize($_SESSION['user']);
 // Checks if the user is set respectively if the email is set
 if (!$user || !$user->email) {
     // Asks the user to login if the userSite.php got accesed via the searchbar 
-    die('Bitte zuerst einloggen: <a href="login.php">User</a>  <a href="login.php">Interal User</a>');
+    die('Bitte zuerst einloggen: <a href="userLogin.php">User</a>  <a href="userLogin.php">Interal User</a>');
 }
 // Reads all courses from the database 
 $course = $database->getCourse($user->courseId);
