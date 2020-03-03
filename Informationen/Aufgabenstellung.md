@@ -5,7 +5,10 @@
   
 Erstellen Sie ein Datenbank Diagramm für ein Onlinekursprogramm welches zwischen Administratoren und Benutzern unterscheidet. Ein Benutzer muss persönliche Informationen wie Name, Adresse, Geburtsdatum etc. besitzen. Wen sich dieser Benutzer anmeldet, soll er den Ihn zugeordneten Kurs und die dem Kurs zugeordneten Dokumenten sehen.  
   
-Jeder Kurs muss einen sogenannten Trainer, der den Kurs leitet, besitzen welcher Administrator sein kann, es aber nicht sein muss.  
+Jeder Kurs muss einen sogenannten Trainer, der den Kurs leitet, besitzen welcher Administrator sein kann, es aber nicht sein muss. 
+
+![Alt text](https://github.com/Azgeb/Komplette-LAP/blob/master/DatenbankDiagramm.svg?sanitize=true)
+<img src="https://github.com/Azgeb/Komplette-LAP/blob/master/DatenbankDiagramm.svg?sanitize=true">
   
 ## :date: Zeitplan  
   
