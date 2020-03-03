@@ -13,11 +13,11 @@ Jeder Kurs muss einen sogenannten Trainer, der den Kurs leitet, besitzen welcher
   
 Erstellen Sie einen Zeitplan in dem Sie Ca. abschätzen, wann Sie mit welchem Teil der Anwendung fertig sein möchten.  
   
-'''  
-  
+```
+!!!  
 Für das Erstellen des Datenbank Diagramms und des Zeitplans wird ca. 2 Stunden veranschlagt  
-  
-'''  
+
+```
   
 ## :globe_with_meridians: Aufgabenstellung Website  
   
