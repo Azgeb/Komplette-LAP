@@ -7,7 +7,6 @@ Erstellen Sie ein Datenbank Diagramm für ein Onlinekursprogramm welches zwische
   
 Jeder Kurs muss einen sogenannten Trainer, der den Kurs leitet, besitzen welcher Administrator sein kann, es aber nicht sein muss. 
 
-![Alt text](https://github.com/Azgeb/Komplette-LAP/blob/master/DatenbankDiagramm.svg?sanitize=true)
 <img src="https://github.com/Azgeb/Komplette-LAP/blob/master/DatenbankDiagramm.svg?sanitize=true">
   
 ## :date: Zeitplan  
