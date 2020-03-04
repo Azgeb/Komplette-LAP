@@ -8,7 +8,7 @@ if (isset($_GET['login'])) {
     $email = $_POST['email'];
     $passwort = $_POST['passwort'];
 
-    // Validates the users provided and stores the user 
+    // Validates the internal users provided and stores the user 
     $user = $database->loginIntern($email, $passwort);
 
     // Checks if the user is set and not false and redirects to the userSite.php 

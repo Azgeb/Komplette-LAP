@@ -17,11 +17,11 @@ if ($user) {
     and no User is in the session storage
     */
     if ($user->isAdministrator == 'n') {
-        die('als admin <a href="logout.php">einloggen</a>');
+        die('Bitte als administrator <a href="logout.php">einloggen</a>');
     } else {
         // Checks if the register form is submited
         if (isset($_GET['register'])) {
-            // Creates a new user object
+            // Creates a new internalUser object
             $newInternalUser = new InternalUser();
             // Sets up the needed variables 
             $error = false;
@@ -89,6 +89,7 @@ if ($user) {
         }
     }
 } else {
+    // Dies if the user in the session storage is not set
     die('Bitte zuerst <a href="logout.php">einloggen</a>');
 }
 ?>
@@ -137,7 +138,7 @@ if ($user) {
             Nachname:<br>
             <input type="text" size="40" maxlength="250" name="lastname"><br><br>
             Postleitzahl:<br>
-            <input type="text" size="40" maxlength="250" name="postalCode"><br><br>  
+            <input type="text" size="40" maxlength="250" name="postalCode"><br><br>
             Stadt:<br>
             <input type="text" size="40" maxlength="250" name="city"><br><br>
             Strasse:<br>

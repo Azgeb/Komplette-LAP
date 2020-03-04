@@ -18,8 +18,8 @@ if (!$user || !$user->email) {
 }
 // Reads all courses from the database 
 $course = $database->getCourse($user->courseId);
+// Reads all documents, for the course, from the database 
 $documents = $database->getDocuments($course->courseId);
-
 ?>
 
 <!DOCTYPE html>
@@ -61,10 +61,10 @@ $documents = $database->getDocuments($course->courseId);
             // creates one entry in the html for each object in the courses array
             foreach ($documents as &$document) {
             ?>
-                <tr>
-                    <td><?php echo $document->displayName ?></td>
-                    <td><a href="../<?php echo $document->path ?>">download</a></td>
-                </tr>
+            <tr>
+                <td><?php echo $document->displayName ?></td>
+                <td><a href="../<?php echo $document->path ?>">download</a></td>
+            </tr>
             <?php
             }
             ?>

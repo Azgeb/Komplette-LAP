@@ -10,8 +10,9 @@ unsearialies the previous serialised user
 and saves it as the newly created user
 */
 $user = unserialize($_SESSION['user']);
-
+// Gets an array of all user for further processing 
 $allUser = $database->getAllUser();
+// Gets an array of all internal user for further processing 
 $allInternalUser = $database->getAllInternalUser();
 
 // Determins if the User in the session storage is set and an admin
@@ -25,6 +26,7 @@ if ($user) {
     }
 
 } else {
+  // Dies if the user in the session storage is not set
     die('Bitte zuerst <a href="logout.php">einloggen</a>');
 }
 ?>
@@ -66,14 +68,14 @@ if ($user) {
                 <th>EMail</th>
             </tr>
             <?php
-            // creates one entry in the html for each object in the courses array
+            // creates one entry in the html for each object in the allUser array
             foreach ($allUser as &$sUser) {
             ?>
-                <tr>
-                    <td><?php echo $sUser->firstname ?></td>
-                    <td><?php echo $sUser->lastname ?></td>
-                    <td><?php echo $sUser->email ?></td>
-                </tr>
+            <tr>
+                <td><?php echo $sUser->firstname ?></td>
+                <td><?php echo $sUser->lastname ?></td>
+                <td><?php echo $sUser->email ?></td>
+            </tr>
             <?php
             }
             ?>
@@ -86,14 +88,14 @@ if ($user) {
                 <th>EMail</th>
             </tr>
             <?php
-            // creates one entry in the html for each object in the courses array
+            // creates one entry in the html for each object in the allInternalUser array
             foreach ($allInternalUser as &$sInternUser) {
             ?>
-                <tr>
-                    <td><?php echo $sInternUser->firstname ?></td>
-                    <td><?php echo $sInternUser->lastname ?></td>
-                    <td><?php echo $sInternUser->email ?></td>
-                </tr>
+            <tr>
+                <td><?php echo $sInternUser->firstname ?></td>
+                <td><?php echo $sInternUser->lastname ?></td>
+                <td><?php echo $sInternUser->email ?></td>
+            </tr>
             <?php
             }
             ?>

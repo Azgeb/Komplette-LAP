@@ -71,7 +71,7 @@ if ($user) {
                     $error = true;
                 }
             }
-            // Regisers a new user 
+            // Creates a new user 
             if (!$error) {
                 $result = $database->createUser($newUser);
                 if ($result) {
@@ -89,6 +89,7 @@ if ($user) {
         }
     }
 } else {
+    // Dies if the user in the session storage is not set
     die('Bitte zuerst <a href="logout.php">einloggen</a>');
 }
 ?>
@@ -137,7 +138,7 @@ if ($user) {
             Nachname:<br>
             <input type="text" size="40" maxlength="250" name="lastname"><br><br>
             Postleitzahl:<br>
-            <input type="text" size="40" maxlength="250" name="postalCode"><br><br>  
+            <input type="text" size="40" maxlength="250" name="postalCode"><br><br>
             Stadt:<br>
             <input type="text" size="40" maxlength="250" name="city"><br><br>
             Strasse:<br>
