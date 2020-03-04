@@ -1,9 +1,11 @@
 
 # :pencil2: Lehrabschlussprüfung 13.02.2020 (Graz / Steiermark)
 ## :question: Why not in English?  
+
 This repository is specifically designed to give insight in the "Lehrabschlussprüfung" in Styria/Austria. The code has no purpose besides giving a working example.  
   
 ## :memo: Allgemein
+
 Dieses Repository wurde als Vorbereitung auf die Lehrabschlussprüfung am 13.02.2020 an der WKO in Graz angelegt und danach um die Aufgabenstellung (Gedächtnisprotokoll) erweitert.
 
 ```
@@ -19,6 +21,10 @@ Sollte trotzdem PDO verwendet werden wird die Praxis als Themenverfehlung gewert
 die Prüfung ist automatisch nicht genügend.
 
 ```
+
+## :exclamation: Verwendung des Repositories
+
+Im Verzeichnis "Informationen" finden sich verschiedene Dateien zu unterschiedlichen Bereichen der LAP. Sollten noch Fragen offen sein können diese gerne als Issue gestellt werden.
 
 ## :busts_in_silhouette: Persönliches
 
