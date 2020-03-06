@@ -2,6 +2,7 @@
 
 1. [Beginn](#beginn)
 2. [Arbeitsauftrag Teil 1](#arbeitsauftrag-teil-1)
+3. [TL;DR](#tldr)
 
 In diesem Dokument werde ich auflisten wie die LAP abgelaufen ist.
 
@@ -21,3 +22,16 @@ Nach den ersten aufgaben vom teil eins, den Netzwerkeinstellungen und den "Progr
 
 ## Arbeitsauftrag Teil 1
 
+## TL;DR
+
+#### Beginn
+
+- Alter Rechner mit Windows 7
+- Technischer Teil = Computer verkabeln
+- CentOS 2 als VM in einer VirtualBox (headless)
+- PC nicht fähig die VM in angemessener Zeit zu importieren
+- PHP Info ausgeben
+- Hello World Programm in PHP schreiben
+- Datenbankdiagramm
+- Zeitplan
+- PhpMyAdmin vorinstalliert
