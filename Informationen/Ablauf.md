@@ -1,5 +1,8 @@
 # :hourglass_flowing_sand: Ablauf der LAP
 
+1. [Beginn](#beginn)
+2. [Arbeitsauftrag Teil 1](#arbeitsauftrag-teil-1)
+
 In diesem Dokument werde ich auflisten wie die LAP abgelaufen ist.
 
 (Mit den Zeiten bin ich mir nicht mehr zu 100% sicher)
