@@ -10,15 +10,18 @@ In diesem Dokument finden Sie die drei Themenschwerpunkte die ich basierend auf 
 - Sie wollen Daten aus einer Tabelle löschen. Mit welchem Keyword können Sie das erreichen?  
 - Sie wollen bestehende Daten in einer Tabelle aktualisieren. Mit welchem Keyword können Sie das erreichen?  
 - Sie wollen eine komplette Tabelle löschen. Mit welchem Keyword können Sie das erreichen?  
-- Sie erstellen eine Datenbankabfrage welche als Tabellenüberschrift "firstname" Besitz. Wie schaffen Sie es das statt "firstname"  "Vorname" als Tabellenname angezeigt wird?  
+- Sie erstellen eine Datenbankabfrage welche als Tabellenüberschrift "firstname" Besitz. Wie schaffen Sie es das statt "firstname"  "Vorname" als Tabellenname angezeigt wird? 
+- Sie definieren ein Feld in der Datenbank als varChar(255) speichern aber nur 5 Charakter ab. Werden trotzdem 255 char Speicher gebraucht?
   
 ##   :computer: Programmiersprachen / Programmieren
 - Was sind Compilersprachen ?- Was sind Interpretersprachen?  
 - Was ist ein Compiler?  
 - Was ist ein Interpreter?  
-- Welche Vorteile/Nachteile haben Compiler / Interpreter?  
+- Welche Vorteile/Nachteile haben Compiler / Interpreter?
+- Welche Programmiersprache vereint sowohl compiler als auch interpreter? 
 - Welche Möglichkeiten kennen Sie Cross-Plattform native Programme zu entwickeln?  
-- Was wird benötigt um Webseiten auf unterschiedlichen Browsern und Geräten anders darzustellen?  
+- Was wird benötigt um Webseiten auf unterschiedlichen Browsern und Geräten anders darzustellen?
+- Wie stellen Sie sicher das Websites auf jedem Browser "richtig" angezeigt werden. 
   
 ##   :office: Arbeitsabläufe
 - Welche Maßnahmen gibt es Datenbanken von Kunden DSGVO Konform im Betrieb aufzubewahren?  
