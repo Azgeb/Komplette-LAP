@@ -33,6 +33,7 @@ Da bekannt war das die "Prüfung" die Entwicklung einer Anwendung in PHP beinhal
 Zu allem Überfluss wird bei der LAP an der WKO Steiermark auch noch verlangt die Datenbankverbindung zu einer MySQL Datenbank mittels MySQLi aufzubauen. Was bedeutet das meine komplette Vorbereitung mit PDO (da dieser Datenbank Connector eigentlich "State of the Art" ist) für nichts war und ich bei der Prüfung improvisieren musste da PDO keine Option war.
 
 >  [...]das Bewertungsschema der LAP ist auf MySQLi ausgelegt.
+>
 > -- <cite>Prüfer (Auf die Frage warum nicht PDO verwendet wird)</cite>
 
   
