@@ -111,7 +111,7 @@ class Database {
         // Creates a empty array
         $internlaUsers = array();
         // Creates and pushes an internal user for each returned row
-        foreach ($sqlResult as & $SqlInternalUser) {
+        foreach ($sqlResult as $SqlInternalUser) {
             // Creates an new internal user
             $internalUser = new InternalUser();
             $internalUser->internalUserId = $SqlInternalUser['internal_user_id'];
