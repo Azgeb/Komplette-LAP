@@ -34,8 +34,6 @@ Zu allem Überfluss wird bei der LAP an der WKO Steiermark auch noch verlangt di
 
 >  [...]das Bewertungsschema der LAP ist auf MySQLi ausgelegt.
 
->
-
 > -- <cite>Prüfer (Auf die Frage warum nicht PDO verwendet wird)</cite>
 
   
