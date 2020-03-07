@@ -69,7 +69,7 @@ if ($user) {
             </tr>
             <?php
             // creates one entry in the html for each object in the allUser array
-            foreach ($allUser as &$sUser) {
+            foreach ($allUser as $sUser) {
             ?>
             <tr>
                 <td><?php echo $sUser->firstname ?></td>
@@ -89,7 +89,7 @@ if ($user) {
             </tr>
             <?php
             // creates one entry in the html for each object in the allInternalUser array
-            foreach ($allInternalUser as &$sInternUser) {
+            foreach ($allInternalUser as $sInternUser) {
             ?>
             <tr>
                 <td><?php echo $sInternUser->firstname ?></td>
