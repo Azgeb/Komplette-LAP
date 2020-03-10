@@ -14,8 +14,6 @@ CREATE TABLE `t_internal_user`
      `city`             VARCHAR(255) NOT NULL, 
      `street`           VARCHAR(255) NOT NULL DEFAULT '', 
      `created_at`       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
-     `updated_at`       TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT 
-     CURRENT_TIMESTAMP, 
      PRIMARY KEY (`internal_user_id`), 
      UNIQUE (`email`) 
   ) 
@@ -46,8 +44,6 @@ CREATE TABLE `t_user`
      `city`        VARCHAR(255) NOT NULL, 
      `street`      VARCHAR(255) NOT NULL DEFAULT '', 
      `created_at`  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
-     `updated_at`  TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT 
-     CURRENT_TIMESTAMP, 
      PRIMARY KEY (`user_id`), 
      UNIQUE (`email`) 
   ) 
