@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once(__DIR__ . '/../modules/config.php');
+require_once('../modules/config.php');
 
 // creates a new empty user Object
 $user = new User();

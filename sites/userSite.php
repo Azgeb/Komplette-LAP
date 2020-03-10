@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once(__DIR__ . '/../modules/config.php');
+require_once('../modules/config.php');
 require_once('../classes/user.php');
 
 // creates a new empty user Object
@@ -38,7 +38,6 @@ $documents = $database->getDocuments($course->courseId);
         <ul style="display: flex;">
             <li> <a href="../index.html" class="bar-item button padding-large white">Home</a></li>
             <div style="flex-grow: 1;"></div>
-            <li><a href="/sites/internLogin.php" class="bar-item button padding-large white">Internes Login</a></li>
             <li><a href="/sites/logout.php" class="bar-item button padding-large white">Logout</a></li>
 
     </div>
