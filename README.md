@@ -36,6 +36,15 @@ Zu allem Überfluss wird bei der LAP an der WKO Steiermark auch noch verlangt di
 >
 > -- <cite>Prüfer (Auf die Frage warum nicht PDO verwendet wird)</cite>
 
+## Verwendung
+
+#### Internes Login
+- ADMINISTRATOR : admin@intern.com      / test  
+- TRAINER       : trainer@intern.com    / test  
+
+#### Login
+- USER          : example@user.com      / test  
+
   
 
 <sub>Copyright (c) Azgeb</sub>

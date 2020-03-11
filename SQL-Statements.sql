@@ -1,3 +1,9 @@
+/*
+- ADMINISTRATOR : admin@intern.com    / test  
+- TRAINER       : trainer@intern.com  / test  
+- USER          : example@user.com    / test  
+*/
+
 CREATE DATABASE onlinekursverwaltung; 
 
 USE onlinekursverwaltung; 
