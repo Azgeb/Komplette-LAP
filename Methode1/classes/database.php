@@ -113,7 +113,7 @@ class Database {
         // Creates and pushes an internal user for each returned row
         foreach ($sqlResult as $SqlInternalUser) {
             // Creates an new internal user
-            $internalUser = new InternalUser();
+            $internalUser = new User();
             $internalUser->internalUserId = $SqlInternalUser['internal_user_id'];
             $internalUser->isAdministrator = $SqlInternalUser['is_administrator'];
             $internalUser->email = $SqlInternalUser['email'];
@@ -140,7 +140,7 @@ class Database {
         // Creates the internal user from the returned row if one is returned
         if (count($sqlResult) > 0) {
             // Creates an new internal user
-            $user = new InternalUser();
+            $user = new User();
             $user->internalUserId = $sqlResult['internal_user_id'];
             $user->isAdministrator = $sqlResult['is_administrator'];
             $user->email = $sqlResult['email'];
