@@ -99,8 +99,8 @@ if ($user) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="stylesheet" href="/../src/css/styles.css">
-<link rel="stylesheet" href="/../src/css/navbar.css">
+<link rel="stylesheet" href="./../src/css/styles.css">
+<link rel="stylesheet" href="./../src/css/navbar.css">
 
 <body>
     <!-- Navbar -->
@@ -109,7 +109,7 @@ if ($user) {
             <li> <a href="index.html" class="bar-item button padding-large white">Home</a></li>
             <div style="flex-grow: 1;"></div>
             <?php if ($user->isAdministrator == 'y') echo '<li><a href="adminSite.php" class="bar-item button padding-large white">Admin Area</a></li>' ?>
-            <li><a href="/sites/logout.php" class="bar-item button padding-large white">Logout</a></li>
+            <li><a href="./logout.php" class="bar-item button padding-large white">Logout</a></li>
         </ul>
     </div>
     <!-- Content -->

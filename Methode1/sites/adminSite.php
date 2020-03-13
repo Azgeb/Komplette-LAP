@@ -4,7 +4,7 @@ require_once('../modules/config.php');
 require_once('../classes/user.php');
 
 // creates a new empty user Object
-$user = new InternalUser();
+$user = new User();
 /*
 unsearialies the previous serialised user 
 and saves it as the newly created user
@@ -21,7 +21,7 @@ if ($user) {
     Asks the user to login if the userSite.php got accesed via the searchbar
     and no User is in the session storage
     */
-    if (!$user->isAdministrator) {
+     if ($user->userRole === 0) {
         die('als admin <a href="logout.php">einloggen</a>');
     }
 
@@ -37,9 +37,9 @@ if ($user) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="stylesheet" href="/../src/css/styles.css">
-<link rel="stylesheet" href="/../src/css/navbar.css">
-<link rel="stylesheet" href="/../src/css/event.css">
+<link rel="stylesheet" href="./../src/css/styles.css">
+<link rel="stylesheet" href="./../src/css/navbar.css">
+<link rel="stylesheet" href="./../src/css/event.css">
 
 <body>
     <!-- Navbar -->
@@ -48,15 +48,15 @@ if ($user) {
             <li> <a href="../index.html" class="bar-item button padding-large white">Home</a></li>
             <div style="flex-grow: 1;"></div>
             <?php if ($user->isAdministrator == 'y') echo '<li><a href="adminSite.php" class="bar-item button padding-large white">Admin Area</a></li>' ?>
-            <li><a href="logout.php" class="bar-item button padding-large white">Logout</a></li>
+            <li><a href="./logout.php" class="bar-item button padding-large white">Logout</a></li>
     </div>
     <!-- Content -->
     <!-- Div that centers the displayed register form -->
     <div style=" display: block;margin-left: auto;margin-right: auto; margin-top: 2rem;width: max-content;">
         <?php
         // Provides a list of links for admin features
-        echo 'User <a href="/sites/createUser.php">erstellen</a> |';
-        echo '| InternalUser <a href="/sites/createInternalUser.php">erstellen</a></br></br>';
+        echo 'User <a href="./createUser.php">erstellen</a> |';
+        echo '| InternalUser <a href="./createInternalUser.php">erstellen</a></br></br>';
         ?>
 
         <h1>Guten Tag, <?php echo $user->firstname, ' ', $user->lastname ?> </h1>

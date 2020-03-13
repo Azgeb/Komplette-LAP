@@ -15,7 +15,7 @@ if (isset($_GET['login'])) {
     if ($user && $user !== false) {
         // Saves the user class as an serealized value
         $_SESSION['user'] = serialize($user);
-        header("Location: /sites/userSite.php", true, 301);
+        header("Location: ./userSite.php", true, 301);
     } else {
         // Dispays an error if the user is invalide 
         $errorMessage = "E-Mail oder Passwort war ungültig<br>";
@@ -29,8 +29,8 @@ if (isset($_GET['login'])) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="stylesheet" href="/../src/css/styles.css">
-<link rel="stylesheet" href="/../src/css/navbar.css">
+<link rel="stylesheet" href="./../src/css/styles.css">
+<link rel="stylesheet" href="./../src/css/navbar.css">
 
 <body>
     <!-- Navbar -->
@@ -38,8 +38,8 @@ if (isset($_GET['login'])) {
         <ul style="display: flex;">
             <li> <a href="../index.html" class="bar-item button padding-large white">Home</a></li>
             <div style="flex-grow: 1;"></div>
-            <li><a href="/sites/internLogin.php" class="bar-item button padding-large white">Internes Login</a></li>
-            <li><a href="/sites/userLogin.php" class="bar-item button padding-large white">Login</a></li>
+            <li><a href="./sites/internLogin.php" class="bar-item button padding-large white">Internes Login</a></li>
+            <li><a href="./sites/userLogin.php" class="bar-item button padding-large white">Login</a></li>
         </ul>
     </div>
     <!-- Content -->

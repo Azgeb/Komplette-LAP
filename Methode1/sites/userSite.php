@@ -28,9 +28,9 @@ $documents = $database->getDocuments($course->courseId);
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="stylesheet" href="/../src/css/styles.css">
-<link rel="stylesheet" href="/../src/css/navbar.css">
-<link rel="stylesheet" href="/../src/css/event.css">
+<link rel="stylesheet" href="./../src/css/styles.css">
+<link rel="stylesheet" href="./../src/css/navbar.css">
+<link rel="stylesheet" href="./../src/css/event.css">
 
 <body>
     <!-- Navbar -->
@@ -38,7 +38,7 @@ $documents = $database->getDocuments($course->courseId);
         <ul style="display: flex;">
             <li> <a href="../index.html" class="bar-item button padding-large white">Home</a></li>
             <div style="flex-grow: 1;"></div>
-            <li><a href="/sites/logout.php" class="bar-item button padding-large white">Logout</a></li>
+            <li><a href="./logout.php" class="bar-item button padding-large white">Logout</a></li>
 
     </div>
     <!-- Content -->
