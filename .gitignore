@@ -20,4 +20,4 @@
 /fuel/app/cache/*/*
 /fuel/app/config/crypt.php
 
-modules/config.php
+
