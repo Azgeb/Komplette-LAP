@@ -39,11 +39,11 @@ Zu allem Überfluss wird bei der LAP an der WKO Steiermark auch noch verlangt di
 ## Verwendung
 
 #### Internes Login
-- ADMINISTRATOR : admin@intern.com      / test  
-- TRAINER       : trainer@intern.com    / test  
+- ADMINISTRATOR : admin@intern.com          test  
+- TRAINER       : trainer@intern.com        test  
 
 #### Login
-- USER          : example@user.com      / test  
+- USER          : example@user.com          test  
 
   
 
