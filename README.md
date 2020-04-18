@@ -10,7 +10,7 @@ Dieses Repository wurde als Vorbereitung auf die Lehrabschlussprüfung am 13.02.
 
 ```
 
-Wichtig!!
+Wichtig!
 
 Bei der LAP wird verlangt die Verbindungen zur Datenbank mittels MySQLi aufzubauen,
 
