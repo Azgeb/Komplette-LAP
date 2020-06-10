@@ -43,7 +43,8 @@ Zu allem Überfluss wird bei der LAP an der WKO Steiermark auch noch verlangt di
 - TRAINER       : trainer@intern.com        test  
 
 #### Login
-- USER          : example@user.com          test  
+- USER          : example@user.com          test
+-  
   
 
 <sub>Copyright (c) Azgeb </sub>
